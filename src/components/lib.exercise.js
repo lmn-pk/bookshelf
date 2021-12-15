@@ -1,44 +1,53 @@
-import styled from '@emotion/styled'
-import {Dialog as ReachDialog} from '@reach/dialog'
+import styled from '@emotion/styled/macro'
+import {keyframes} from '@emotion/core';
+import {Dialog as ReachDialog} from '@reach/dialog';
+import {FaSpinner} from 'react-icons/fa';
+import * as colors from 'styles/colors';
+import * as md from 'styles/media-queries';
 
-// 🐨 create a button styled component here called "Button"
-// make it look nice and allow it to support a "variant" prop which can be
-// either "primary" or "secondary".
-// 💰 don't forget to export it at the bottom!
-// 💰 In my final version, I style padding, border, lineHeight, and borderRadius
-//    the same for both types, and then change the background and color based
-//    on the given variant.
-// 🦉 remember, you don't have to make things look perfect or just like they
-// do in the final example. Just make sure you understand how to create the
-// styled component and accept a prop to change which styles apply.
+const spin = keyframes({
+  '0%': {transform: 'rotate(0deg)'},
+  '100%': {transform: 'rotate(360deg)'},
+});
 
-// 🐨 Feel free to create as many reusable styled components here as you'd like
-// 💰 in my finished version I have: Button, Input, CircleButton, Dialog, FormGroup
+const Spinner = styled(FaSpinner)({
+  animation: ` ${spin} 1s linear infinite`,
+});
 
-// 🎨 here are a bunch of styles you can copy/paste if you want
-// Button:
-//   padding: '10px 15px',
-//   border: '0',
-//   lineHeight: '1',
-//   borderRadius: '3px',
+Spinner.defaultProps = {
+  'aria-label': 'loading',
+}
 
-// Button variant="primary" (in addition to the above styles)
-//   background: '#3f51b5',
-//   color: 'white',
+const buttonVariants = {
+  primary: {
+    background: colors.indigo,
+    color: colors.base,
+  },
+  secondary: {
+    background: colors.gray,
+    color: colors.text,
 
-// Button variant="secondary" (in addition to the above styles)
-//   background: '#f1f2f7',
-//   color: '#434449',
+  }
+}
 
-// Input
-//   borderRadius: '3px',
-//   border: '1px solid #f1f1f4',
-//   background: '#f1f2f7',
-//   padding: '8px 12px',
+const Button = styled.button({
+    padding: '10px 15px',
+    border: '0',
+    lineHeight: '1',
+    borderRadius: '3px',
+}, ({variant = 'primary'}) => buttonVariants[variant],);
 
-// FormGroup
-//   display: 'flex',
-//   flexDirection: 'column',
+const Input = styled.input({
+  borderRadius: '3px',
+  border: `1px solid ${colors.gray10}`,
+  background: '#f1f2f7',
+  padding: '8px 12px',
+});
+
+const FormGroup = styled.form({
+  display: 'flex',
+  flexDirection: 'column',
+});
 
 // 💰 I'm giving a few of these to you:
 const CircleButton = styled.button({
@@ -50,9 +59,9 @@ const CircleButton = styled.button({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: 'white',
-  color: '#434449',
-  border: `1px solid #f1f1f4`,
+  background: colors.base,
+  color: colors.text,
+  border: `1px solid ${colors.gray10}`,
   cursor: 'pointer',
 })
 
@@ -68,4 +77,4 @@ const Dialog = styled(ReachDialog)({
   },
 })
 
-export {CircleButton, Dialog}
+export {Button, FormGroup, Input, Spinner, CircleButton, Dialog}
